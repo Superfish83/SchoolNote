@@ -60,7 +60,6 @@ public class Frag_Schedule extends Fragment {
         tv_deadlines = (TextView) view.findViewById(R.id.tv_deadlines);
         btn_addnewdeadline = (Button) view.findViewById(R.id.btn_addnewdeadline);
 
-
         //현재 날짜 TextView
         LocalDate ld = LocalDate.now();
         LocalTime lt = LocalTime.now();
