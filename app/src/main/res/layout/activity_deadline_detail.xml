@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DeadlineDetailActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_margin="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="tv_deadline_title"
+        android:id="@+id/tv_deadline_title" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="tv_deadline_due"
+        android:id="@+id/tv_deadline_due"/>
+    <TextView
+        android:layout_marginVertical="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:textSize="20sp"
+        android:text="tv_deadline_details"
+        android:id="@+id/tv_deadline_details"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:id="@+id/btn_ok"/>
+
+</LinearLayout>

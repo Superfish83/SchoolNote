@@ -2,6 +2,7 @@ package com.example.schoolnote;
 
 import android.app.LauncherActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,10 +66,22 @@ public class ScheduleAdapter extends BaseAdapter {
                 int i = getIndex((String)tvTitle.getText());
                 listViewItemList.remove(i); //항목 찾아서 삭제
                 notifyDataSetChanged();
-                fragment.UpdateDeadlineCount();
+                fragment.deadlineList.remove(i);
+                fragment.UpdateDeadlines();
 
                 String s = "'" + tvTitle.getText() + "' 완료!"; //Toast 메세지 띄우기
                 Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(fragment.getActivity(), DeadlineDetailActivity.class);
+                int i = getIndex((String)tvTitle.getText());
+                intent.putExtra("info", fragment.deadlineList.get(i));
+
+                fragment.startActivity(intent);
             }
         });
 

@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +48,7 @@ public class Frag_Schedule extends Fragment {
     //SharedPreference 이용한 데이터 저장
     private SharedPreferences preferences;
     private SharedPreferences.Editor pref_editor;
-    private Set<String> deadlineStringSet;
+    public List<String> deadlineList;
 
     @Nullable
     @Override
@@ -75,10 +76,10 @@ public class Frag_Schedule extends Fragment {
         preferences = getContext().getSharedPreferences("pref", Activity.MODE_PRIVATE);
         pref_editor = preferences.edit();
 
-        //데드라인 데이터 로드
-        deadlineStringSet = preferences.getStringSet("deadlines", new HashSet<String>());
-        Log.e("Frag_Schedule",String.valueOf(deadlineStringSet.size()));
-        for(String s : deadlineStringSet){
+        //데드라인 데이터 로드 (Set 으로 받아오고 ArrayList 로 변환해 사용)
+        Set<String> deadlineStringSet = preferences.getStringSet("deadlines", new HashSet<String>());
+        deadlineList = new ArrayList<>(deadlineStringSet);
+        for(String s : deadlineList){
             adapter.addItem(s);
         }
 
@@ -113,9 +114,7 @@ public class Frag_Schedule extends Fragment {
                 s += name + "§" + disc + "§";
                 s += String.valueOf(k[0]) + "-" + String.valueOf(k[1]) + "-" + String.valueOf(k[2]);
                 Log.e("Frag_Schedule",s);
-                deadlineStringSet.add(s);
-                pref_editor.putStringSet("deadlines",deadlineStringSet);
-                pref_editor.commit();
+                deadlineList.add(s);
 
 
                 Integer due[] = {0,0,0};
@@ -123,12 +122,23 @@ public class Frag_Schedule extends Fragment {
 
                 adapter.addItem(name,disc,due);
 
-                UpdateDeadlineCount();
+                UpdateDeadlines();
             }
         }
     }
 
     public void UpdateDeadlineCount(){
         tv_deadlines.setText("항목 수: " + Integer.toString(adapter.getCount()) + "개");
+    }
+
+    public void UpdateDeadlines(){
+        Set<String> deadlineStringSet = new HashSet<String>(deadlineList);
+
+        pref_editor.remove("deadlines");
+        pref_editor.commit();
+        pref_editor.putStringSet("deadlines",deadlineStringSet);
+        pref_editor.commit();
+
+        UpdateDeadlineCount();
     }
 }
